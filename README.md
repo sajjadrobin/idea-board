@@ -19,6 +19,4 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ### `yarn build`
 
-A netlify build is available for preview:
-
-###
+A netlify build is available for preview: [idea-board](idea-board.netlify.com)
