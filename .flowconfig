@@ -1,0 +1,14 @@
+[ignore]
+node_modules
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+module.name_mapper='^stores\(.*\)$'->'<PROJECT_ROOT>/src/stores\1'
+module.name_mapper.extension='css' -> '<PROJECT_ROOT>/flow/CSSModuleStub.js'
+module.name_mapper.extension='scss' -> '<PROJECT_ROOT>/flow/CSSModuleStub.js'
+module.name_mapper='.*\.\(svg\|png\|jpg\|gif\)$' -> '<PROJECT_ROOT>/flow/url-loader.js'
+[strict]

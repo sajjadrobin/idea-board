@@ -1,0 +1,28 @@
+.ideaItem {
+  width: 150px;
+  height: 150px;
+  margin: 10px;
+  display: inline-block;
+  box-sizing: border-box;
+  border: .01rem inset lightgrey;
+  float: left;
+
+  span, img {
+    display: block;
+    padding-left: 0.5rem;
+  }
+}
+
+.addIdeaButton {
+  background-color: lightgreen;
+  width: 6rem;
+  height: 2rem;
+  border-radius: 5px;
+  margin: 10px;
+  font-size: 1rem;
+}
+
+.noList {
+  margin: 10px;
+  color: blue;
+}
