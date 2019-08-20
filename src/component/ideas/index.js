@@ -15,6 +15,18 @@ type Props = {
 const Index = observer(
   class Index extends Component<Props> {
 
+    showDeleteIcon(event) {
+      const parent = event.currentTarget.children;
+      const image = parent.item(4)
+      image.style.display = "block";
+    }
+
+    hideDeleteIcon(event) {
+      const parent = event.currentTarget.children;
+      const image = parent.item(4)
+      image.style.display = "none";
+    }
+
     componentDidMount() {
       IdeaApi.getAllIdeas();
     }
@@ -23,8 +35,13 @@ const Index = observer(
       this.props.history.push("/add")
     }
 
-    deleteIdea (id) {
+    deleteIdea(id) {
       IdeaApi.deleteIdea(id);
+    }
+
+    sortIdea(event) {
+      const type = event.currentTarget.value;
+      IdeaApi.sortIdea(type);
     }
 
     render() {
@@ -33,19 +50,29 @@ const Index = observer(
       return (
         <Fragment>
           <button onClick={() => this.showAddForm()} className={styles.addIdeaButton}>Add Idea</button>
+          Sort By <select onChange={(event) => this.sortIdea(event)}>
+            <option value="title">Title</option>
+            <option value="created_date">Created Date</option>
+          </select>
           <div className={styles.ideas}>
             {!!ideaLists.length ? (
               ideaLists.map((idea) =>
-                <span key={idea.id} className={styles.ideaItem}>
+                <span
+                  key={idea.id}
+                  className={styles.ideaItem}
+                  onMouseEnter={(event) => this.showDeleteIcon(event)}
+                  onMouseLeave={(event) => this.hideDeleteIcon(event)}
+                >
                   <span>ID: {idea.id}</span>
                   <span>Created: {moment.unix(idea.created_date).format("YY-MM-DD h:mm:ss")}</span>
                   <span>{idea.title}</span>
                   <span>{idea.body}</span>
                   <img
+                    className={styles.delete}
                     onClick={() => this.deleteIdea(idea.id)}
-                    src="https://img.icons8.com/wired/16/ff0000/delete-forever.png" />
+                    src="https://img.icons8.com/wired/16/ff0000/delete-forever.png"/>
                 </span>)
-            ): (<h3 className={styles.noList}>There is no idea. Please add One.</h3>)}
+            ) : (<h3 className={styles.noList}>There is no idea. Please add One.</h3>)}
           </div>
         </Fragment>
       )

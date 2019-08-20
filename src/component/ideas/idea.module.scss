@@ -7,10 +7,16 @@
   border: .01rem inset lightgrey;
   float: left;
 
-  span, img {
+  span {
     display: block;
     padding-left: 0.5rem;
   }
+
+  img {
+    display: none;
+    padding-left: 0.5rem;
+  }
+
 }
 
 .addIdeaButton {
@@ -19,6 +25,12 @@
   height: 2rem;
   border-radius: 5px;
   margin: 10px;
+  font-size: 1rem;
+}
+
+select {
+  width: 6rem;
+  height: 2rem;
   font-size: 1rem;
 }
 

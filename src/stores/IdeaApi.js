@@ -3,6 +3,8 @@ import {decorate, observable, action} from "mobx";
 import moment from "moment";
 import Axios from "axios";
 
+import {compareValues} from "./utils";
+
 class IdeaApi {
   newIdeaId = "";
   newIdeaCreatedAt = 0;
@@ -39,6 +41,10 @@ class IdeaApi {
       if(!local) {
         local = [];
       }
+
+      //remove existing idea with the same ID
+      local = local.filter(localIdea => localIdea.id !== idea.id);
+
       local.push(idea);
 
       await localStorage.setItem(this.localStorageItem, JSON.stringify(local));
@@ -78,6 +84,20 @@ class IdeaApi {
       console.log(e);
     } finally {
       this.isIdeaUpdating = false;
+    }
+  }
+
+  // sort list
+  async sortIdea(type) {
+    const allIdeas = await localStorage.getItem(this.localStorageItem);
+
+    if(allIdeas) {
+      let result = JSON.parse(allIdeas);
+
+      result = result.sort(compareValues(type, 'asc'));
+
+      await localStorage.setItem(this.localStorageItem, JSON.stringify(result));
+      this.ideaLists = result;
     }
   }
 

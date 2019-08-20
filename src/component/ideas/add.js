@@ -3,6 +3,8 @@ import React, {Component} from "react";
 import {observer} from "mobx-react";
 import moment from "moment";
 import {withRouter} from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 import styles from "./add.module.scss";
 import IdeaApi from "stores/IdeaApi";
@@ -13,7 +15,8 @@ type Props = {
 
 type State = {
   bodyCharCount: number,
-  remainingChar: number
+  remainingChar: number,
+  updateDone: boolean
 }
 
 const Add = observer(
@@ -21,7 +24,8 @@ const Add = observer(
 
     state = {
       bodyCharCount : 0,
-      remainingChar: 140
+      remainingChar: 140,
+      updateDone: false
     }
 
     constructor(props) {
@@ -48,7 +52,7 @@ const Add = observer(
       });
 
       if (!IdeaApi.isIdeaUpdating) {
-        this.props.history.push("/");
+        toast("Your edit has been updated");
       }
     }
 
@@ -57,12 +61,18 @@ const Add = observer(
       this.setState({remainingChar: 140 - body.length, bodyCharCount: body.length});
     }
 
+    goToList() {
+      this.props.history.push("/");
+    }
+
     render() {
       const {newIdeaId, newIdeaCreatedAt} = IdeaApi;
       const {bodyCharCount, remainingChar} = this.state;
 
       return (
         <div className={styles.add}>
+          <a href="#" onClick={()=>this.goToList()}>All lists</a>
+          <ToastContainer />
           {!!newIdeaId.length && (<h3>Id: {newIdeaId}</h3>)}
           {newIdeaCreatedAt && (<h3>Created At: {moment.unix(newIdeaCreatedAt).format("YY-MM-DD h:mm:ss")}</h3>)}
           <input ref={this.titleRef} autoFocus={true} onBlur={() => this.saveIdea()}/>
