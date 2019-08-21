@@ -16,8 +16,9 @@ const Index = observer(
   class Index extends Component<Props> {
 
     showDeleteIcon(event) {
-      const parent = event.currentTarget.children;
-      const image = parent.item(4)
+      const parent = event.currentTarget;
+      const allChildren = parent.children;
+      const image = allChildren.item(4)
       image.style.display = "block";
     }
 
